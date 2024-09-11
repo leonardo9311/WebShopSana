@@ -13,7 +13,9 @@ namespace WebShop.Core.Interfaces.Repository
         Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
         Task<List<T>> AddRange(List<T> Listentity, CancellationToken cancellationToken = default);
         Task UpdateRange(List<T> Listentity, CancellationToken cancellationToken = default);
+
+        Task<T> GetByIdAsync(int id);
         T GetById(int id);
-        IQueryable<T> ListAsync();
+        IQueryable<T> GetAll();
     }
 }

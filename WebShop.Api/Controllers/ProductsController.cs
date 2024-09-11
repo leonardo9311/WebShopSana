@@ -17,7 +17,7 @@ namespace WebShop.Api.Controllers
         
         [HttpGet]
         public async Task<IActionResult> GetProducts(int pageNumber = 1, int pageSize = 10)
-        {
+         {
             IEnumerable<ProductDto> products = await _productService.GetProductsAsync(pageNumber, pageSize);
             return Ok(products);
         }
