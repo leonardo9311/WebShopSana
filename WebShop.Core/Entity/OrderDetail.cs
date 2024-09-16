@@ -13,6 +13,7 @@ namespace WebShop.Core.Entity
         public int ProductID { get; set; }
         public Product Product { get; set; } = new Product();
         public int Quantity { get; set; }
+
         public decimal PriceAtOrderTime { get; set; }
     }
 }

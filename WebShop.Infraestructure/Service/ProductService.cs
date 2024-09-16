@@ -19,9 +19,10 @@ namespace WebShop.Infraestructure.Service
         {
             _productRepository = productRepository;
         }
-        public Task<bool> CheckProductStockAsync(int productId, int quantity)
+        public async Task<bool> CheckProductStockAsync(int productId, int requestedQuantity)
         {
-            throw new NotImplementedException();
+            var product = await _productRepository.GetByIdAsync(productId);
+            return product != null && product.StockQuantity >= requestedQuantity;
         }
 
         public Task<ProductDto> GetProductByIdAsync(int productId)

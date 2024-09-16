@@ -32,5 +32,21 @@ namespace WebShop.Api.Controllers
             }
             return Ok(product);
         }
+
+        [HttpGet("{productId}/check-stock")]
+        public async Task<IActionResult> CheckStock(int productId, [FromQuery] int quantity)
+        {
+            // Llamada al servicio para verificar el stock
+            bool isAvailable = await _productService.CheckProductStockAsync(productId, quantity);
+
+            if (isAvailable)
+            {
+                return Ok(new { isAvailable = true });
+            }
+            else
+            {
+                return Ok(new { isAvailable = false });
+            }
+        }
     }
 }

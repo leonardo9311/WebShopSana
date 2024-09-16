@@ -37,12 +37,11 @@ namespace WebShop.Infraestructure.Config
             #endregion Data
 
             #region Bussines
-            services.AddTransient<ICartService, CartService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IStockValidationService, StockValidationService>();
+         
             #endregion Bussines
         }
     }

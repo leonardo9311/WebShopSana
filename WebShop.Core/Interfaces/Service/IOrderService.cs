@@ -9,8 +9,7 @@ namespace WebShop.Core.Interfaces.Service
 {
     public interface IOrderService
     {
-        Task<OrderDto> CreateOrderAsync(int customerId, IEnumerable<CartItemDto> cartItems);
-        Task<OrderDto> GetOrderByIdAsync(int orderId);
-        Task<IEnumerable<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
+        Task<OrderDto> CreateOrderAsync(ProcessOrderDto processOrderDto);
+        Task<decimal> GetProductPrice(int productId);
     }
 }

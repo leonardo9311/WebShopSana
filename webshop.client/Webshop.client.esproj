@@ -10,10 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\atoms\" />
-    <Folder Include="src\components\molecules\" />
-    <Folder Include="src\components\organism\" />
     <Folder Include="src\components\templates\" />
-    <Folder Include="src\services\" />
-    <Folder Include="src\store\" />
+    <Folder Include="src\store\actions\" />
   </ItemGroup>
 </Project>

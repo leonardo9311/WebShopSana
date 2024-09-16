@@ -19,28 +19,18 @@ namespace WebShop.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> ProcessOrder([FromBody] ProcessOrderDto processOrderDto)
         {
-            var order = await _orderService.CreateOrderAsync(processOrderDto.CustomerID, processOrderDto.CartItems);
-            return CreatedAtAction(nameof(GetOrderById), new { id = order.OrderID }, order);
-        }
-
-        // GET: api/orders/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrderById(int id)
-        {
-            var order = await _orderService.GetOrderByIdAsync(id);
-            if (order == null)
+            try
             {
-                return NotFound();
+                var order = await _orderService.CreateOrderAsync(processOrderDto);
+                return Ok(order);
             }
-            return Ok(order);
+            catch (Exception ex)
+            {
+                
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        // GET: api/orders/customer/{customerId}
-        [HttpGet("customer/{customerId}")]
-        public async Task<IActionResult> GetOrdersByCustomer(int customerId)
-        {
-            var orders = await _orderService.GetOrdersByCustomerIdAsync(customerId);
-            return Ok(orders);
-        }
+
     }
 }

@@ -8,9 +8,7 @@ namespace WebShop.Core.DTO
 {
     public class OrderDetailDto
     {
-        public int OrderID { get; set; }
         public int ProductID { get; set; }
-        public string? ProductTitle { get; set; } 
         public int Quantity { get; set; }
         public decimal PriceAtOrderTime { get; set; }
     }

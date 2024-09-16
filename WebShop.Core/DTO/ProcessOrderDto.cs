@@ -9,6 +9,6 @@ namespace WebShop.Core.DTO
     public class ProcessOrderDto
     {
         public int CustomerID { get; set; }
-        public List<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
+        public List<CartItemDto> CartItems { get; set; }
     }
 }

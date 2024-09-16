@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Core", "WebShop.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Infraestructure", "WebShop.Infraestructure\WebShop.Infraestructure.csproj", "{45E23E80-B34D-48FA-B6AA-1D46C9C4F547}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Webshop.client", "WebShop.Client\Webshop.client.esproj", "{46CC0276-3929-49A6-8236-5C153C4860D0}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Webshop.Client", "WebShop.Client\Webshop.Client.esproj", "{46CC0276-3929-49A6-8236-5C153C4860D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
