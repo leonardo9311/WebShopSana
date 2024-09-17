@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Product } from '../../services/product/productInterfaca';
+import { Product } from '../../interfaces/productInterface';
 import { ProductService } from '../../services/product/productService'; 
 
 const productService = new ProductService(); 
@@ -13,6 +13,28 @@ export const addItemToCart = createAsyncThunk(
             throw new Error('Insufficient stock available');
         }       
         return product;
+    }
+);
+
+export const processOrderAsync = createAsyncThunk(
+    'cart/processOrder',
+    async (_, { getState }) => {
+        const state = getState() as any; // Get the current state
+        const cartItems = state.cart.items;
+
+        const orderData = {
+            customerID: 1,
+            cartItems: cartItems.map((item: Product) => ({
+                productId: item.productID,
+                quantity: item.quantity,
+            })),
+        };
+        
+
+    
+        const response = await productService.processOrder(orderData);
+    
+        return response;
     }
 );
 

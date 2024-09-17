@@ -75,5 +75,7 @@ namespace WebShop.Infraestructure.Service
             return product.Price;
         
         }
+
+       
     }
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { addItemToCart } from '../../store/actions/cartActions';
-import { Product } from '../../services/product/productInterfaca';
+import { Product } from '../../interfaces/productInterface';
 import { AppDispatch } from '../../store/store';
 import { useDispatch } from 'react-redux';
 
@@ -12,10 +12,16 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
    
     const dispatch: AppDispatch  = useDispatch(); 
+    const [quantity, setQuantity] = useState<number>(1);
+
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newQuantity = parseInt(e.target.value, 10);
+        setQuantity(newQuantity > 0 ? newQuantity : 1); 
+    };
 
     const handleAddToCart = () => {
-
-        dispatch(addItemToCart(product));
+        product.quantity = quantity;
+        dispatch(addItemToCart(product)); 
        
     };
 
@@ -28,6 +34,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     <p className="card-text">{product.description}</p>
                     <p className="card-text">Price: ${product.price.toFixed(2)}</p>
                     <p className="card-text">Stock: {product.stockQuantity}</p>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor={`quantity-${product.productID}`} className="form-label">Quantity:</label>
+                    <input
+                        type="number"
+                        id={`quantity-${product.productID}`}
+                        className="form-control"
+                        value={quantity}
+                        min={1}
+                        onChange={handleQuantityChange}
+                    />
                 </div>
 
                 <button

@@ -1,21 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addItemToCart, updateItemQuantityAsync, removeItemAsync } from '../actions/cartActions';
-import { Product } from '../../services/product/productInterfaca';
+import { Product } from '../../interfaces/productInterface';
+import { CartStateInterface } from '../../interfaces/cartStateInterface';
 
-interface CartItem {
-    id: number;
-    title: string;
-    productCode: string;
-    price: number;
-    quantity: number;
-    stockQuantity: number;
-}
-
-interface CartState {
-    items: CartItem[];
-}
-
-const initialState: CartState = {
+const initialState: CartStateInterface = {
     items: [],
 };
 
@@ -26,29 +14,29 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(addItemToCart.fulfilled, (state, action: PayloadAction<Product>) => {
-                const existingItem = state.items.find(item => item.id === action.payload.productID);
+                const existingItem = state.items.find(item => item.productID === action.payload.productID);
                 if (existingItem) {
-                    existingItem.quantity += 1;
+                    existingItem.quantity += action.payload.quantity;
                 } else {
-                    // Add the product to the cart with an initial quantity of 1
+                   
                     state.items.push({
-                        id: action.payload.productID,
+                        productID: action.payload.productID,
                         title: action.payload.title,
                         productCode: action.payload.productCode,
                         price: action.payload.price,
                         stockQuantity: action.payload.stockQuantity,
-                        quantity: 1,
+                        quantity: action.payload.quantity
                     });
                 }
             })
             .addCase(updateItemQuantityAsync.fulfilled, (state, action: PayloadAction<{ productId: number; quantity: number }>) => {
-                const item = state.items.find(item => item.id === action.payload.productId);
+                const item = state.items.find(item => item.productID === action.payload.productId);
                 if (item) {
                     item.quantity = action.payload.quantity;
                 }
             })
             .addCase(removeItemAsync.fulfilled, (state, action: PayloadAction<number>) => {
-                state.items = state.items.filter(item => item.id !== action.payload);
+                state.items = state.items.filter(item => item.productID !== action.payload);
             });
     },
 });

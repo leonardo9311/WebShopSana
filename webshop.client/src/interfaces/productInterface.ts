@@ -4,5 +4,6 @@ export interface Product {
     title: string;           
     description?: string;    
     price: number;           
-    stockQuantity: number;   
+    stockQuantity: number;
+    quantity: number;
 }

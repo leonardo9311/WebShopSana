@@ -16,7 +16,7 @@ namespace WebShop.Api.Controllers
         }
 
         // POST: api/orders
-        [HttpPost]
+        [HttpPost("ProcessOrder")]
         public async Task<IActionResult> ProcessOrder([FromBody] ProcessOrderDto processOrderDto)
         {
             try

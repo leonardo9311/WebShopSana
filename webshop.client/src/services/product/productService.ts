@@ -1,4 +1,5 @@
-import { Product } from "./productInterfaca";
+import { ProcessOrderInterface } from "../../interfaces/processOrdeerInterface";
+import { Product } from "../../interfaces/productInterface";
 
 export class ProductService {
     private baseUrl: string;
@@ -18,6 +19,24 @@ export class ProductService {
         }
         return response.json();
     }
+
+    async processOrder(orderData: ProcessOrderInterface): Promise<any> {
+        const response = await fetch(`${this.baseUrl}/api/Orders/ProcessOrder`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( orderData ),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to process order');
+        }
+
+        return response.json();
+    }
+
+
     async checkProductStock(productId: number, requestedQuantity: number): Promise<boolean> {
         try {
      
