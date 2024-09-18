@@ -21,7 +21,7 @@ namespace WebShop.Api.Controllers
         {
             try
             {
-                var order = await _orderService.CreateOrderAsync(processOrderDto);
+                var order = await _orderService.ProcessOrdeer(processOrderDto);
                 return Ok(order);
             }
             catch (Exception ex)

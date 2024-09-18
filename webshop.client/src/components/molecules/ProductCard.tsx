@@ -3,6 +3,8 @@ import { addItemToCart } from '../../store/actions/cartActions';
 import { Product } from '../../interfaces/productInterface';
 import { AppDispatch } from '../../store/store';
 import { useDispatch } from 'react-redux';
+import { setNotification } from '../../store/reducers/notificationSlice'; // Import global notification action
+
 
 interface ProductCardProps {
     product: Product;
@@ -13,16 +15,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
    
     const dispatch: AppDispatch  = useDispatch(); 
     const [quantity, setQuantity] = useState<number>(1);
-
+   
     const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newQuantity = parseInt(e.target.value, 10);
         setQuantity(newQuantity > 0 ? newQuantity : 1); 
     };
 
-    const handleAddToCart = () => {
-        product.quantity = quantity;
-        dispatch(addItemToCart(product)); 
-       
+    const handleAddToCart = async () => {
+        try {
+            product.quantity = quantity;
+            await dispatch(addItemToCart(product)).unwrap(); 
+            dispatch(setNotification({ message: 'se agrego al carrito!', type: 'success' })); // Trigger global notificat
+        } catch (error) {
+            dispatch(setNotification({ message: 'No se pudo agregar el item al carrito', type: 'error' })); // Trigger global notification
+        }
     };
 
     return (
@@ -55,7 +61,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     Add to Cart
                 </button>
             </div>
-        </div>
+
+         
+         </div>
     );
 };
 

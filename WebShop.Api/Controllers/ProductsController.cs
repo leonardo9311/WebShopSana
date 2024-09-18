@@ -21,18 +21,8 @@ namespace WebShop.Api.Controllers
             IEnumerable<ProductDto> products = await _productService.GetProductsAsync(pageNumber, pageSize);
             return Ok(products);
         }
-       
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(int id)
-        {
-            ProductDto product = await _productService.GetProductByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
-        }
-
+      
+      
         [HttpGet("{productId}/check-stock")]
         public async Task<IActionResult> CheckStock(int productId, [FromQuery] int quantity)
         {

@@ -27,7 +27,7 @@ const ProductPage: React.FC = () => {
         };
 
         fetchProducts();
-    }, [currentPage]); // Re-fetch products when the page changes
+    }, [currentPage]); 
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -50,11 +50,13 @@ const ProductPage: React.FC = () => {
                     Next
                 </button>
             </div>
-            {/* Muestra un indicador de carga superpuesto */}
+         
             <div style={{ position: 'relative' }}>
                 {loading && <div className="loading-overlay">Loading...</div>}
                 <ProductList products={products} />
             </div>
+
+
         </div>
     );
 };

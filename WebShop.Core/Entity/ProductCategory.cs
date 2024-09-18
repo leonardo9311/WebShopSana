@@ -9,8 +9,8 @@ namespace WebShop.Core.Entity
     public class ProductCategory
     {
         public int ProductID { get; set; }
-        public Product Product { get; set; } = new Product();
+        public Product Product { get; set; }
         public int CategoryID { get; set; }
-        public Category Category { get; set; } = new Category();
+        public Category Category { get; set; } 
     }
 }

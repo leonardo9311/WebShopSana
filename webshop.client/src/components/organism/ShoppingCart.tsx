@@ -4,13 +4,15 @@ import CartItem from '../molecules/CartItem';
 import { updateItemQuantityAsync, removeItemAsync, processOrderAsync } from '../../store/actions/cartActions';
 import { RootState } from '../../store/store';
 import { AppDispatch } from '../../store/store';
+import { setNotification } from '../../store/reducers/notificationSlice'; // Import global notification action
+
 
 const ShoppingCart: React.FC = () => {
     const dispatch: AppDispatch = useDispatch();
     const cartItems = useSelector((state: RootState) => state.cart.items);
 
     const [total, setTotal] = useState<number>(0);
-
+   
     useEffect(() => {
         const calculateTotal = () => {
             let totalAmount = 0;
@@ -36,9 +38,9 @@ const ShoppingCart: React.FC = () => {
     const handleProcessOrder = async () => {
         try {
             await dispatch(processOrderAsync()).unwrap();
-            console.log('Order processed successfully');
+            dispatch(setNotification({ message: 'Order processed successfully!', type: 'success' })); // Trigger global notification
         } catch (error) {
-            console.error('Failed to process order:', error);
+            dispatch(setNotification({ message: 'Failed to process order.', type: 'error' })); // Trigger global notification
         }
     };
 
@@ -48,10 +50,10 @@ const ShoppingCart: React.FC = () => {
             <ul>
                 {cartItems.map((item) => (
                     <CartItem
-                        key={item.id}
+                        key={item.productID}
                         item={item}
                         onQuantityChange={handleQuantityChange}
-                        onRemove={() => handleRemoveFromCart(item.id)}
+                        onRemove={() => handleRemoveFromCart(item.productID)}
                     />
                 ))}
             </ul>
@@ -59,6 +61,8 @@ const ShoppingCart: React.FC = () => {
                 <h3>Total: ${total.toFixed(2)}</h3>
                 <button onClick={handleProcessOrder}>Process Order</button>
             </div>
+
+       
         </div>
     );
 };

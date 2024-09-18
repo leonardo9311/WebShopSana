@@ -2,10 +2,12 @@
 
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import cartReducer from './reducers/cartSlice';
+import notificationReducer from './reducers/notificationSlice'; 
 
-// Combinar múltiples reducers
+
 const rootReducer = combineReducers({
     cart: cartReducer,
+    notification: notificationReducer
 });
 
 
@@ -15,7 +17,7 @@ const preloadedState = {
     },
 };
 
-// Configurar el store
+
 const store = configureStore({
     reducer: rootReducer,
     preloadedState,

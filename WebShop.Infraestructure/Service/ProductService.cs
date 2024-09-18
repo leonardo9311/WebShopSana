@@ -25,9 +25,11 @@ namespace WebShop.Infraestructure.Service
             return product != null && product.StockQuantity >= requestedQuantity;
         }
 
-        public Task<ProductDto> GetProductByIdAsync(int productId)
+        public async Task<List<Product>> GetProductsByIdsAsync(List<int> productIds)
         {
-            throw new NotImplementedException();
+            return await _productRepository.GetAll()
+                .Where(p => productIds.Contains(p.ProductID))
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<ProductDto>> GetProductsAsync(int pageNumber, int pageSize)
@@ -53,6 +55,19 @@ namespace WebShop.Infraestructure.Service
 
 
             return await products;
+        }
+
+        public async Task UpdateStockAsync(List<OrderDetail> orderDetails)
+        {
+            foreach (var detail in orderDetails)
+            {
+                var product = await _productRepository.GetByIdAsync(detail.ProductID);
+                if (product == null)
+                    throw new Exception($"Product with ID {detail.ProductID} not found.");
+
+                product.StockQuantity -= detail.Quantity;
+                await _productRepository.UpdateAsync(product);
+            }
         }
     }
 }

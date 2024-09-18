@@ -1,4 +1,4 @@
-import { CartItemInteface } from "./CartItemInteface";
+import { CartItemInteface } from "./cartItemInteface";
 
 export interface CartStateInterface {
     items: CartItemInteface[];

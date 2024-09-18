@@ -9,9 +9,9 @@ namespace WebShop.Core.Entity
     public class OrderDetail
     {
         public int OrderID { get; set; }
-        public Order Order { get; set; } = new Order();
+        public Order Order { get; set; } 
         public int ProductID { get; set; }
-        public Product Product { get; set; } = new Product();
+        public Product Product { get; set; } 
         public int Quantity { get; set; }
 
         public decimal PriceAtOrderTime { get; set; }

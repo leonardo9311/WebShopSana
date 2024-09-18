@@ -1,0 +1,37 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border-radius: 4px;
+    z-index: 1000; /* Ensure it appears on top of other elements */
+    display: flex;
+    align-items: center;
+}
+
+.notification--success {
+    background-color: green;
+}
+
+.notification--error {
+    background-color: red;
+}
+
+.notification--info {
+    background-color: blue;
+}
+
+.notification--warning {
+    background-color: orange;
+}
+
+.notification button {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebShop.Core.DTO;
+﻿using WebShop.Core.DTO;
 using WebShop.Core.Entity;
 using WebShop.Core.Interfaces.Repository;
 using WebShop.Core.Interfaces.Service;
@@ -14,41 +9,89 @@ namespace WebShop.Infraestructure.Service
     {
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<OrderDetail> _orderDetailRepository;
-        private readonly IRepository<Product> _productRepository;
+        private readonly ICustomerService _customerService;
+        private readonly IProductService _productService;
 
         public OrderService(IRepository<Order> orderRepository, 
                             IRepository<OrderDetail> orderDetailRepository,
-                            IRepository<Product> productRepository)
+                            ICustomerService customerService,
+                            IProductService productService)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
+            _customerService = customerService;
+            _productService = productService;
         }
 
-        public async Task<OrderDto> CreateOrderAsync(ProcessOrderDto processOrderDto)
+        public async Task<OrderDto> ProcessOrdeer(ProcessOrderDto processOrderDto)
         {
-            // Crear la entidad Order
+          
+            var customer = await GetCustomerAsync(processOrderDto.CustomerID);         
+            var order = await CreateOrderAsync(customer);           
+            var orderDetails = await CreateOrderDetailsAsync(processOrderDto.CartItems, order);
+            await _productService.UpdateStockAsync(orderDetails);
+            return ConvertToOrderDto(order, orderDetails);
+        }
+
+        private async Task<CustomerDto> GetCustomerAsync(int customerId)
+        {
+            var customer = await _customerService.GetCustomerByIdAsync(customerId);
+            if (customer == null)
+            {
+                throw new ArgumentException($"Customer with ID {customerId} not found.");
+            }
+            return customer;
+        }
+
+        private async Task<Order> CreateOrderAsync(CustomerDto customer)
+        {
             var order = new Order
             {
-                CustomerID = processOrderDto.CustomerID,
+                CustomerID = customer.CustomerID,
                 OrderDate = DateTime.UtcNow
             };
 
-            // Guardar la orden en la base de datos
-            await _orderRepository.AddAsync(order);
+            return await _orderRepository.AddAsync(order);
+        }
 
-            // Crear y guardar los detalles de la orden
-            var orderDetailsTasks = processOrderDto.CartItems.Select(async item => new OrderDetail
+        private async Task<List<OrderDetail>> CreateOrderDetailsAsync(List<CartItemDto> cartItems, Order createdOrder)
+        {
+            var productIds = cartItems.Select(item => item.ProductId).ToList();
+            var productDtos = await _productService.GetProductsByIdsAsync(productIds);
+
+            var orderDetails = new List<OrderDetail>();
+
+            foreach (var item in cartItems)
             {
-                OrderID = order.OrderID,
-                ProductID = item.ProductId,
-                Quantity = item.Quantity,
-                PriceAtOrderTime = await GetProductPrice(item.ProductId) 
-            }).ToList();
-            var orderDetails = await Task.WhenAll(orderDetailsTasks);
-            await _orderDetailRepository.AddRange(orderDetails.ToList());
+                var productDto = productDtos.FirstOrDefault(p => p.ProductID == item.ProductId);
+                if (productDto == null)
+                {
+                    throw new ArgumentException($"Product with ID {item.ProductId} not found.");
+                }
 
-            // Convertir a DTO para retornar
-            var orderDto = new OrderDto
+                if (productDto.StockQuantity < item.Quantity)
+                {
+                    throw new InvalidOperationException($"Insufficient stock for product ID {item.ProductId}.");
+                }
+
+                var orderDetail = new OrderDetail
+                {
+                    OrderID = createdOrder.OrderID,
+                    ProductID = item.ProductId,
+                    Quantity = item.Quantity,
+                    PriceAtOrderTime = productDto.Price
+                };
+
+                orderDetails.Add(orderDetail);
+            }
+
+            await _orderDetailRepository.AddRange(orderDetails);
+            return orderDetails;
+        }
+
+        private OrderDto ConvertToOrderDto(Order order, List<OrderDetail> orderDetails)
+        {
+            return new OrderDto
             {
                 OrderID = order.OrderID,
                 CustomerID = order.CustomerID,
@@ -60,22 +103,6 @@ namespace WebShop.Infraestructure.Service
                     PriceAtOrderTime = od.PriceAtOrderTime
                 }).ToList()
             };
-
-            return orderDto;
         }
-
-   
-        private async Task<decimal> GetProductPrice(int productId)
-        {
-            var product = await _productRepository.GetByIdAsync(productId);
-            if (product == null)
-            {
-                throw new Exception($"Product with ID {productId} not found.");
-            }
-            return product.Price;
-        
-        }
-
-       
     }
 }

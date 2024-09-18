@@ -21,12 +21,12 @@ namespace WebShop.Infraestructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Order>()
-             .HasOne(o => o.Customer)
-             .WithMany(c => c.Orders)
-             .HasForeignKey(o => o.CustomerID)
-             .OnDelete(DeleteBehavior.Cascade);
+                        .HasOne(o => o.Customer)
+                        .WithMany(c => c.Orders)
+                        .HasForeignKey(o => o.CustomerID)
+                        .OnDelete(DeleteBehavior.Cascade);
 
-           
+
             modelBuilder.Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductID, pc.CategoryID });
 

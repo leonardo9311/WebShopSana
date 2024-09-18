@@ -5,7 +5,7 @@ import { removeItemAsync, updateItemQuantityAsync } from '../../store/actions/ca
 
 interface CartItemProps {
     item: {
-        id: number;
+        productID: number;
         title: string;
         price: number;
         quantity: number;
@@ -21,18 +21,18 @@ const CartItem: React.FC<CartItemProps> = ({ item}) => {
 
     const handleIncreaseQuantity = () => {
         if (item.quantity < item.stockQuantity) {
-            dispatch(updateItemQuantityAsync({ productId: item.id, quantity: item.quantity + 1 }));
+            dispatch(updateItemQuantityAsync({ productId: item.productID, quantity: item.quantity + 1 }));
         }
     };
 
     const handleDecreaseQuantity = () => {
         if (item.quantity > 1) {
-            dispatch(updateItemQuantityAsync({ productId: item.id, quantity: item.quantity - 1 }));
+            dispatch(updateItemQuantityAsync({ productId: item.productID, quantity: item.quantity - 1 }));
         }
     };
 
     const handleRemove = () => {
-        dispatch(removeItemAsync(item.id));
+        dispatch(removeItemAsync(item.productID));
     };
 
     return (

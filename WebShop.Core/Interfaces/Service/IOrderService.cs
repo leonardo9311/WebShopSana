@@ -4,6 +4,6 @@ namespace WebShop.Core.Interfaces.Service
 {
     public interface IOrderService
     {
-        Task<OrderDto> CreateOrderAsync(ProcessOrderDto processOrderDto);     
+        Task<OrderDto> ProcessOrdeer(ProcessOrderDto processOrderDto);     
     }
 }
