@@ -62,8 +62,8 @@ This project consists of multiple sub-projects: `WebShop.Api`, `WebShop.Client`,
 
 2. **Run the Project**:
     - Press `F5` in Visual Studio 2022 to start the project. This will start both the API and the client applications.
-    - The `WebShop.Api` will be available at `https://localhost:5001` (or the port specified in the `launchSettings.json`).
-    - The `WebShop.Client` will run on a different port, typically `http://localhost:3000`.
+    - The `WebShop.Api` will be available at `https://localhost:44396/` (or the port specified in the `launchSettings.json`).
+    - The `WebShop.Client` will run on a different port, typically `http://localhost:5173/`.
 
 ### Frontend Setup
 
