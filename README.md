@@ -1,7 +1,10 @@
 # WebShop Project
 
 This project consists of multiple sub-projects: `WebShop.Api`, `WebShop.Client`, `WebShop.Core`, and `WebShop.Infrastructure`. Follow these steps to get the project running locally.
+
+
 ##ER Diagram
+
 ![ER Diagram](./database/ER.jpg)
 
 ## Prerequisites
@@ -29,8 +32,7 @@ This project consists of multiple sub-projects: `WebShop.Api`, `WebShop.Client`,
 
    Your configuration should look like this:
 
-   ![Multiple Startup Projects](./configstartup.jpg) <!-- Update this path if you add this image to your repository -->
-
+   ![Multiple Startup Projects](./configstartup.jpg) 
 ### Updating the Connection String
 
 1. **Locate `appsettings.json` in `WebShop.Api`**:
