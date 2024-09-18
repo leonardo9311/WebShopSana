@@ -64,6 +64,24 @@ This project consists of multiple sub-projects: `WebShop.Api`, `WebShop.Client`,
     - Press `F5` in Visual Studio 2022 to start the project. This will start both the API and the client applications.
     - The `WebShop.Api` will be available at `https://localhost:44396/` (or the port specified in the `launchSettings.json`).
     - The `WebShop.Client` will run on a different port, typically `http://localhost:5173/`.
+    - In case the `WebShop.Api` run over other port ensure change it in the .env that is in /src/WebShop.client/.env
+ ```bash
+VITE_API_BASE_URL=https://localhost:44396
+   ```
+ - In case the `WebShop.client` run over other port ensure change the allowed origin , which is in the file /src/`WebShop.Infrastructure`/Config/CorsConfig
+ ```bash
+ services.AddCors(options =>
+ {
+     options.AddPolicy("AllowSpecificOrigin",
+         policy =>
+         {
+             policy.WithOrigins("PLACE new url like  localhost:port") =>policy.WithOrigins("http://localhost:5173")  // Add the origin you want to allow
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+         });
+ });
+ return services;
+   ```
 
 ### Frontend Setup
 
