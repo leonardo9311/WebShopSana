@@ -15,6 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebShop.Infraestructure", "
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Webshop.Client", "WebShop.Client\Webshop.Client.esproj", "{46CC0276-3929-49A6-8236-5C153C4860D0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{7A85220B-3002-441A-A9DD-56B4070C3516}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\Backup\SanaWebShopDB-2024917-22-48-41.bak = ..\..\..\..\..\Program Files\Microsoft SQL Server\MSSQL16.SQLEXPRESS\MSSQL\Backup\SanaWebShopDB-2024917-22-48-41.bak
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
