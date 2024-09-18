@@ -1,11 +1,13 @@
+## ER Diagram
+
+![ER Diagram](./database/ER.jpg)
+
 # WebShop Project
 
 This project consists of multiple sub-projects: `WebShop.Api`, `WebShop.Client`, `WebShop.Core`, and `WebShop.Infrastructure`. Follow these steps to get the project running locally.
 
 
-##ER Diagram
 
-![ER Diagram](./database/ER.jpg)
 
 ## Prerequisites
 
